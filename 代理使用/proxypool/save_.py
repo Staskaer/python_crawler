@@ -11,6 +11,7 @@ from settings import REDIS_HOST
 from settings import REDIS_PORT
 from settings import REDIS_PASSWORD
 from settings import REDIS_KEY
+from settings import DECREASE_MAX_POINT
 
 
 class RedisClient(object):
@@ -39,6 +40,13 @@ class RedisClient(object):
             else:
                 return None
 
+    def max_score(self):
+        # 此方法返回所有满分代理
+        result = self.db.zrangebyscore(REDIS_KEY, MAX_SCORE, MAX_SCORE)
+        if len(result):
+            return result
+        return None
+
     def decrease(self, proxy):
         # 将不可用代理分数减去定义的数值，到0则移除
         score = self.db.zscore(REDIS_KEY, proxy)
@@ -56,6 +64,17 @@ class RedisClient(object):
         else:
             print("代理", proxy,  '移除')
             return self.db.zrem(REDIS_KEY, proxy)
+
+    def decrease_max(self, proxy):
+        # 将不可用的满分代理分数减去定义的数值
+        score = self.db.zscore(REDIS_KEY, proxy)
+        print('满分代理', proxy, '当前分数', score, '减{}，变为'.format(
+            DECREASE_MAX_POINT), score - DECREASE_MAX_POINT)
+        score = score - DECREASE_MAX_POINT
+        mapping = {
+            proxy: score,
+        }
+        return self.db.zadd(REDIS_KEY, mapping)
 
     def exist(self, proxy):
         # 判断某代理是否存在

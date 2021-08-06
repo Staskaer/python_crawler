@@ -1,6 +1,7 @@
 # 调度模块，负责检测模块，接口模块和爬取模块的调度策略
 # 暂时还未编写接口模块
 from testproxy import Tester
+from testproxy import Test_max_score
 from getter import Getter
 from multiprocessing import Process
 from time import sleep
@@ -12,6 +13,8 @@ from settings import GETTER_ENABLE
 from settings import API_ENABLE
 from settings import API_HOST
 from settings import API_PORT
+from settings import MAX_SCORE_ENABLE
+from settings import MAX_SCORE_CYCLE
 from api import app
 
 
@@ -25,6 +28,17 @@ class Schedule(object):
                 sleep(cycle)
             except:
                 print("测试器出错中止，3秒后重新启动...")
+                sleep(3)
+
+    def max_score_test(self, cycle=MAX_SCORE_CYCLE):
+        tester = Test_max_score()
+        while True:
+            try:
+                print("开始测试满分代理...")
+                tester.run()
+                sleep(cycle)
+            except:
+                print("满分测试器出错中止，3秒后重新启动...")
                 sleep(3)
 
     def schedule_getter(slef, cycle=GETTER_CYCLE):
@@ -54,6 +68,10 @@ class Schedule(object):
         if API_ENABLE:
             api_process = Process(target=self.schedule_api)
             api_process.start()
+
+        if MAX_SCORE_ENABLE:
+            max_score_process = Process(target=self.max_score_test)
+            max_score_process.start()
 
 
 if __name__ == '__main__':
