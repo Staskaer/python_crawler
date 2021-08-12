@@ -23,3 +23,5 @@
 10.scrapy对接selenium
 
 11.使用scrapy中item pipeline中的Imagepipeline爬取图片（pixiv中的arcaea图）
+
+12.scrapy对接splash进行渲染
