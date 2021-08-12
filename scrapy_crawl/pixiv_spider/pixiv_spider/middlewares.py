@@ -83,6 +83,7 @@ class PixivSpiderDownloaderMiddleware:
         # - or raise IgnoreRequest: process_exception() methods of
         #   installed downloader middleware will be called
         '''
+        一开始想用selenium来模拟登录并将cookie导出到scrapy，但是selenium导出的cookie不全，只能放弃这种方法
         flag = request.meta.get('login', False)
         targeturl = request.meta.get('target', None)
         if flag and targeturl:
