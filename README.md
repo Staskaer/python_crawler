@@ -21,3 +21,5 @@
 9.搭建具有不同模块，通过调度器来调度，类似于scrapy的爬虫
 
 10.scrapy对接selenium
+
+11.使用scrapy中item pipeline中的Imagepipeline爬取图片（pixiv中的arcaea图）
