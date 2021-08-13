@@ -25,3 +25,5 @@
 11.使用scrapy中item pipeline中的Imagepipeline爬取图片（pixiv中的arcaea图）
 
 12.scrapy对接splash进行渲染
+
+13.scrapy中的item loader与crawl 的结合
