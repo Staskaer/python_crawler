@@ -27,3 +27,5 @@
 12.scrapy对接splash进行渲染
 
 13.scrapy中的item loader与crawl 的结合
+
+14.scrapy对接redis实现分布式爬虫
