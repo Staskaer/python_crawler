@@ -1,0 +1,37 @@
+import re
+import scrapy
+from scrapy.linkextractors import LinkExtractor
+from scrapy.spiders import CrawlSpider, Rule
+from scrapyuniversal.items import YangguangLoador, YgItem
+
+
+class YgSpider(CrawlSpider):
+    name = 'yg'
+    allowed_domains = []
+    start_urls = ['https://wz.sun0769.com/political/index/politicsNewest/']
+
+    rules = (
+        Rule(LinkExtractor(allow=r'/political/politics/index\?id=\d+', restrict_xpaths="//ul[@class='title-state-ul']/li"),
+             callback='parse_item', follow=False),
+        Rule(LinkExtractor(allow=r'/political/index/politicsNewest\?id=1&page=\d+'),
+             follow=True),
+    )
+
+    def parse_item(self, response):
+        loador = YangguangLoador(item=YgItem(), response=response)
+        loador.add_xpath(field_name='title',
+                         xpath="//p[@class='focus-details']/text()")
+        loador.add_xpath(field_name='text',
+                         xpath="//div[@class='details-box']//text()")
+        loador.add_xpath(
+            field_name='image', xpath="//div[@class='clear details-img-list Picture-img']/img/@src")
+        data = re.findall(
+            r"<span class=\"fl\">发布日期(\d+-\d+-\d+ \d+:\d+:\d+)</span>", response.text)
+        status_code = re.findall(
+            r"<span class=\"fl\">状态：(.*?)</span>", response.text, re.DOTALL)
+        id_code = re.findall(
+            r"<span class=\"fl\">编号：(\d+)</span>", response.text)
+        loador.add_value(field_name='time', value=data)
+        loador.add_value(field_name='status', value=status_code)
+        loador.add_value(field_name='id_code', value=id_code)
+        yield loador.load_item()

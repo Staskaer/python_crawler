@@ -61,7 +61,7 @@ TEST_ENABLE = True
 GETTER_ENABLE = True
 # api模块开关
 API_ENABLE = True
-# 满分检测模块
+# 满分检测模块开关
 MAX_SCORE_ENABLE = True
 # api主机
 API_HOST = '127.0.0.1'

@@ -5,6 +5,7 @@ from testproxy import Test_max_score
 from getter import Getter
 from multiprocessing import Process
 from time import sleep
+from api import app
 
 from settings import TEST_CYCLE
 from settings import GETTER_CYCLE
@@ -15,7 +16,6 @@ from settings import API_HOST
 from settings import API_PORT
 from settings import MAX_SCORE_ENABLE
 from settings import MAX_SCORE_CYCLE
-from api import app
 
 
 class Schedule(object):

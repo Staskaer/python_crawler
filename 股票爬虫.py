@@ -37,7 +37,8 @@ def getStockInfo(lst, StockURL, fpath):  # 将获得的列表中的股票一一�
                 continue
             soup = BeautifulSoup(html, "html.parser")
             StockInfo = soup.find('div', 'stock-current').string  # 存储股票价格
-            StockName = soup.find('div', 'stock-name').string.split('(')[0]  # 存储股票名称
+            StockName = soup.find(
+                'div', 'stock-name').string.split('(')[0]  # 存储股票名称
             infoDict.update({StockName: StockInfo})  # 将爬取的股票名称，价格以键值对的方式存入字典
 
         except:
@@ -46,7 +47,7 @@ def getStockInfo(lst, StockURL, fpath):  # 将获得的列表中的股票一一�
     with open(fpath, 'a', encoding='utf-8')as f:  # 保存到文件中
         for key, value in infoDict.items():
             f.write(key)
-            f.write('\t:\t')
+            f.write('\t\t')
             f.write(str(value))
             f.write('\n')
 
@@ -56,7 +57,7 @@ def main():
     Stock_info_URL = "https://xueqiu.com/S/"
     output_file = r"D:\python_files\股票爬取结果.txt"
     slist = []
-    for i in range(1, 2):  # 绝对绝对绝对不能过大（会把自己的内存爬爆掉）（P.S.优化拉跨)
+    for i in range(1, 1):
         url = Stock_list_URL + str(i)
         getStockList(slist, url)
     getStockInfo(slist, Stock_info_URL, output_file)
