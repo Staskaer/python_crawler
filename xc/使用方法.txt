@@ -1,0 +1,4 @@
+在本路径下打开cmd或powershell，然后输入scrapy crawl xiecheng即可，注意需要开启数据库服务
+其中可以在settings文件中配置sql的连接数据库名、密码等信息，也可以配置并发数目、延时等配置
+
+还要先安装scrapy的环境
